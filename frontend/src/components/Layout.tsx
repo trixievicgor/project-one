@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useAuthStore from '../stores/authStore';
+import useAuthStore from "@/stores/authStore";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -69,24 +69,16 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen bg-gradient-to-b from-[#FFA294] to-[#EECAB8]`}
+      className="flex flex-col min-h-screen bg-black"
       onClick={updateActivity}
     >
-      {/* Show Warning Popup */}
-      {warning && token && (
-        <div className="px-6 py-3 fixed top-6 left-1/2 w-[90%] max-w-md -translate-x-1/2 bg-yellow-500 rounded-lg shadow-xl z-20">
-          <p className="font-medium text-center">You&apos;ll be logged out due to inactivity in {countdown} seconds.</p>
-        </div>
-      )}
-
       {/* Shared Header */}
-      <nav className="w-full px-6 flex justify-between items-center bg-none">
+      <nav className="w-full px-6 py-2 flex justify-between items-center border-b-2 border-[#3d4243]">
         <button
-          onClick={() => navigate('/dashboard')}
-          data-testid="finpay-header-logo"
+          onClick={() => navigate('/')}
           className="flex items-center justify-center overflow-hidden cursor-pointer"
         >
-          <img src={'/Finpay.png'} alt="FinPay Logo" className="h-20 w-32" />
+          <img src={'/Logo.png'} alt="Logo" className="h-20 w-70" />
         </button>
         {headerRight}
       </nav>
@@ -97,9 +89,9 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-gray-900 py-8">
+      <footer className="w-full bg-black py-8 border-t-2 border-[#3d4243]">
         <div className="text-center text-gray-400">
-          <p>© 2025 FinPay. All rights reserved.</p>
+          <p>© 2026 MarketVision. All rights reserved.</p>
         </div>
       </footer>
     </div>
