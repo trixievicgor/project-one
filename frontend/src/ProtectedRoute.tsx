@@ -15,10 +15,6 @@ const ProtectedRoute = ({ children, auth = false }: ProtectedRouteProp) => {
     return <Navigate to='/' />;
   }
 
-  if (auth && hasToken && isAuthenticated) {
-    return <Navigate to='/dashboard' />;
-  }
-
   return children;
 };
 
