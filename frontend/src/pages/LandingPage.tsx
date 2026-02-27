@@ -15,7 +15,7 @@ const LandingPage = () => {
   const highlightedMarkets = [
     { name: 'GLD', price: '$1,800.00', change: '+0.5%' },
     { name: 'BTC', price: '$1.00', change: '+0.5%' },
-    { name: 'NVDA', price: '$1,800.00', change: '+0.5%' },
+    { name: 'NVDA', price: '$1,80.00', change: '+0.5%' },
     { name: 'MSFT', price: '$1,800.00', change: '+0.5%' },
     { name: 'SPY', price: '$1,800.00', change: '+0.5%' },
     { name: 'QQQ', price: '$1,800.00', change: '+0.5%' },
