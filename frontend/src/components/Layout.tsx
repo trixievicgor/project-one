@@ -14,14 +14,14 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
   const navigate = useNavigate();
   const [activity, setActivity] = useState(Date.now());
   const [warning, setWarning] = useState(false);
-  const [countdown, setCountdown] = useState(WARNING_DURATION / 1000);
+  // const [countdown, setCountdown] = useState(WARNING_DURATION / 1000);
   const token = useAuthStore((state) => state.token);
   const resetAuth = useAuthStore((state) => state.resetAuth);
 
   const updateActivity = () => {
     setActivity(Date.now());
     setWarning(false);
-    setCountdown(WARNING_DURATION / 1000);
+    // setCountdown(WARNING_DURATION / 1000);
   }
 
   useEffect(() => {
@@ -46,8 +46,8 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
 
       // Countdown timer
       if (warning) {
-        const timeLeft = Math.ceil((TIMEOUT_DURATION - timeDiff) / 1000);
-        setCountdown(timeLeft);
+        // const timeLeft = Math.ceil((TIMEOUT_DURATION - timeDiff) / 1000);
+        // setCountdown(timeLeft);
       }
 
       if (timeDiff > TIMEOUT_DURATION && token) {
