@@ -9,7 +9,7 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
   return (
     <div className='relative min-h-screen overflow-hidden bg-black'>
       {/* Maintenence Notice */}
-      {maintenence && <div className='fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/10 text-white text-center px-6'>
+      {maintenence && <div className='fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 text-white text-center px-6'>
         <p className='absolute text-[17rem] font-bold text-white/30 select-none pointer-events-none -z-10'>
           BlackVaultz
         </p>
@@ -29,12 +29,12 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
         }`}
       >
         {/* Shared Header */}
-        <nav className='w-full px-6 py-2 flex justify-between items-center border-b-2 border-[#3d4243]'>
+        <nav className='w-full p-1 flex justify-between items-center border-b-2 border-[#3d4243]'>
           <button
             // onClick={() => navigate('/')}
             className='flex items-center justify-center overflow-hidden cursor-pointer'
           >
-            <img src={'/Logo.png'} alt='Logo' className='h-20' />
+            <img src={'/BlackVaultzLogo.png'} alt='Logo' className='h-15' />
           </button>
           {headerRight}
         </nav>
