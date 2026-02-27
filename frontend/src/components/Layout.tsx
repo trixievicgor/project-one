@@ -82,6 +82,8 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
           Estimated launch: 01 January 2027
         </p>
       </div>}
+
+      {/* Main Page */}
       <div
         inert={maintenence}
         className={`flex flex-col min-h-screen bg-black ${
