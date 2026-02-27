@@ -19,7 +19,7 @@ const LandingPage = () => {
     { name: 'MSFT', price: '$1,800.00', change: '+0.5%' },
     { name: 'SPY', price: '$1,800.00', change: '+0.5%' },
     { name: 'QQQ', price: '$1,800.00', change: '+0.5%' },
-    { name: 'BND', price: '$1,800.00', change: '+0.5%' },
+    { name: 'BND', price: '$1,80.00', change: '+0.5%' },
     { name: 'AAPL', price: '$1,800.00', change: '+0.5%' },
     { name: 'N225', price: '$1,800.00', change: '+0.5%' },
     { name: 'DIA', price: '$1,800.00', change: '+0.5%' },
