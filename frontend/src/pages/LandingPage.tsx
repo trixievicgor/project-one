@@ -2,7 +2,7 @@
 import { RiAccountCircle2Line } from 'react-icons/ri';
 import Layout from '../components/Layout';
 import { useGSAP } from '@gsap/react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
 gsap.registerPlugin(useGSAP);
@@ -24,6 +24,14 @@ const LandingPage = () => {
     { name: 'N225', price: '$1,800.00', change: '+0.5%' },
     { name: 'DIA', price: '$1,800.00', change: '+0.5%' },
   ];
+
+  useEffect(() => {
+    const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = "/Logo.png";
+    }
+    document.title = "BlackVaultz";
+  }, []);
 
   useGSAP(() => {
     gsap.fromTo(

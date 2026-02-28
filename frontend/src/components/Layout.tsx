@@ -9,7 +9,7 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
   return (
     <div className='relative min-h-screen overflow-hidden bg-black'>
       {/* Maintenence Notice */}
-      {maintenence && <div className='fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 text-white text-center px-6'>
+      {maintenence && <div className='fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/30 text-white text-center px-6'>
         <p className='absolute text-[17rem] font-bold text-white/30 select-none pointer-events-none -z-10'>
           BlackVaultz
         </p>
