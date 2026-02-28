@@ -24,10 +24,10 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
           BlackVaultz
         </p>
         <p className='font-semibold text-5xl block'>
-          BlackVaultz is Currently Available by Invitation Only
+          BlackVaultz is Currently Under Construction
         </p>
         <p className='font-semibold text-2xl block mt-4'>
-          Public Access Will Be Available On 1st January 2027
+          Launching 1st January 2027
         </p>
         <form onSubmit={handleSubmit} className='mt-8'>
           <input
@@ -44,7 +44,7 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
       <div
         inert={maintenence}
         className={`flex flex-col min-h-screen bg-black ${
-          maintenence ? 'blur-[2px]' : ''
+          maintenence ? 'blur-[10px]' : ''
         }`}
       >
         {/* Shared Header */}
