@@ -4,7 +4,6 @@ import Layout from '../components/Layout';
 import { useGSAP } from '@gsap/react';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { TbClover, TbCloverFilled } from "react-icons/tb";
 
 gsap.registerPlugin(useGSAP);
 
