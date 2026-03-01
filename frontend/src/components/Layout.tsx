@@ -48,7 +48,7 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
         }`}
       >
         {/* Shared Header */}
-        <nav className='w-full p-1 flex justify-between items-center border-b-2 border-[#3d4243]'>
+        <nav className='w-full p-1 flex justify-between items-center'>
           <button
             // onClick={() => navigate('/')}
             className='flex items-center justify-center overflow-hidden cursor-pointer'
