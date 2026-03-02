@@ -1,20 +1,22 @@
 import { RiAccountCircle2Line } from 'react-icons/ri';
 import Layout from '../components/Layout';
 import { useGSAP } from '@gsap/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-
 import { MarketHighlight } from '../components/landing/MarketHighlight';
+import type { MarketData } from '../components/landing/MarketHighlight';
 import TrendingAnalysis from '../components/landing/TrendingAnalysis';
 import NewsSection from '../components/landing/NewsSection';
 import TopMovers from '../components/landing/TopMovers';
 import Social from '../components/landing/Social';
 
 gsap.registerPlugin(useGSAP);
+const TICKERS = ['GLD', 'BTC-USD', 'NVDA', 'AAPL', 'SPY'];
 
-const LandingPage = () => {
+export const LandingPage = () => {
   const carouselRefs = [useRef(null), useRef(null), useRef(null)];
   const [saved, setSaved] = useState<Record<number, boolean>>({});
+  const [marketData, setMarketData] = useState<MarketData[]>([]);
 
   useGSAP(() => {
     carouselRefs.forEach(ref => {
@@ -32,12 +34,38 @@ const LandingPage = () => {
     </div>
   );
 
+  const fetchAllMarkets = async () => {
+    try {
+      // Map through tickers and fetch each from your backend
+      const requests = TICKERS.map(ticker => 
+        fetch(`http://localhost:5001/api/stock/${ticker}`).then(res => res.json())
+      );
+      
+      const results = await Promise.all(requests);
+      // Filter out any errors and update state
+      setMarketData(results.filter(item => !item.error));
+    } catch (err) {
+      console.error("Failed to poll market data:", err);
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch
+    fetchAllMarkets();
+
+    // Set up 2-second interval
+    const interval = setInterval(fetchAllMarkets, 1000000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Layout headerRight={headerButtons}>
       <section className="container flex flex-col max-w-screen flex-grow">
         
         <div className="flex w-full overflow-hidden py-3 border-y-2 border-neutral-800">
-          {carouselRefs.map((ref, i) => <MarketHighlight key={i} ref={ref} />)}
+          {carouselRefs.map((ref, i) => <MarketHighlight key={i} ref={ref} data={marketData} />)}
         </div>
 
         <div className="flex p-3 gap-4">
