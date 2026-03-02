@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { fetchStockData } from './services/stockService.js';
+// import { fetchStockData } from '../../functions/src/services/stockService';
 
 const app = express();
 app.use(cors());
@@ -16,8 +16,8 @@ app.get('/api/stock/:code', async (req: Request, res: Response) => {
   }
 
   try {
-    const data = await fetchStockData(code);
-    res.json(data);
+    // const data = await fetchStockData('AAPL');
+    res.json('AAPL');
   } catch (error: any) {
     res.status(404).json({ error: error.message });
   }

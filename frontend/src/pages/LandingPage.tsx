@@ -38,7 +38,7 @@ export const LandingPage = () => {
     try {
       // Map through tickers and fetch each from your backend
       const requests = TICKERS.map(ticker => 
-        fetch(`http://localhost:5001/api/stock/${ticker}`).then(res => res.json())
+        fetch(`/api/stock/${ticker}`).then(res => res.json())
       );
       
       const results = await Promise.all(requests);
