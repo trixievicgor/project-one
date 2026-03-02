@@ -1,39 +1,34 @@
 import { fetchStockData } from "../services/stockService";
-export async function onRequestGet(context) {
-  const { request, env } = context;
+
+export async function onRequestGet(context: any) {
+  const { request } = context;
   
   try {
     const url = new URL(request.url);
-    const code = url.pathname.split('/').pop();
+    // This extracts "AAPL" from ".../api/stock/AAPL"
+    const pathParts = url.pathname.split('/');
+    const code = pathParts[pathParts.length - 1];
     
-    // Check if code exists and is a single string
-    if (typeof code !== 'string' || code.length === 0) {
-      return new Response(
-        JSON.stringify({ error: "Invalid ticker symbol format" }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" }
-        }
-      );
+    if (!code || code === 'stock') {
+      return new Response(JSON.stringify({ error: "Ticker symbol required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" }
+      });
     }
 
-    // Your stock service logic
-    const stockData = await fetchStockData(code);
+    const stockData = await fetchStockData(code.toUpperCase());
     
     return new Response(JSON.stringify(stockData), {
       status: 200,
       headers: { 
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*" // CORS
+        "Access-Control-Allow-Origin": "*" 
       }
     });
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      }
-    );
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
   }
 }

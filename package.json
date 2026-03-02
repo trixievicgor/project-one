@@ -15,7 +15,6 @@
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "tree-kill": "^1.2.2",
-    "yahoo-finance2": "^3.13.1"
+    "tree-kill": "^1.2.2"
   }
 }
