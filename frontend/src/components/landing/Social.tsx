@@ -152,11 +152,6 @@ export default function Social() {
       {/* ── FEED TAB ── */}
       {activeTab === "Feed" && (
         <>
-          <div className="flex items-center gap-2">
-            <span>🔥</span>
-            <span className="text-sm font-semibold text-neutral-200 tracking-wide">Hot conversations</span>
-          </div>
-
           <div className="flex flex-col gap-3">
             {posts.map(post => (
               <div key={post.id} className="bg-neutral-950 border border-neutral-800 rounded-xl overflow-hidden hover:border-neutral-700 transition-colors">
