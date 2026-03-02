@@ -1,4 +1,4 @@
-import { fetchStockData } from "../services/stockService";
+import { fetchStockData } from "../../services/stockService";
 
 export async function onRequestGet(context: any) {
   const { request } = context;
