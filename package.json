@@ -1,0 +1,26 @@
+{
+  "name": "marketvision",
+  "version": "1.0.0",
+  "description": "MarketVision Monorepo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix backend && npm run build --prefix frontend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "tree-kill": "^1.2.2",
+    "rxjs": "^7.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trixievicgor/project-one.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
