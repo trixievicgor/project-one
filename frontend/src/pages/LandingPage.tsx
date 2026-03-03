@@ -38,7 +38,7 @@ export const LandingPage = () => {
     try {
       // Map through tickers and fetch each from your backend
       const requests = TICKERS.map(ticker => 
-        fetch(`/api/stock/${ticker}`).then(res => res.json())
+        fetch(`http://localhost:5001/api/stock/${ticker}`).then(res => res.json())
       );
       
       const results = await Promise.all(requests);
@@ -54,7 +54,7 @@ export const LandingPage = () => {
     fetchAllMarkets();
 
     // Set up 2-second interval
-    const interval = setInterval(fetchAllMarkets, 1000000);
+    const interval = setInterval(fetchAllMarkets, 1000);
 
     // Clean up interval on unmount
     return () => clearInterval(interval);
