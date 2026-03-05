@@ -54,7 +54,7 @@ export const LandingPage = () => {
     fetchAllMarkets();
 
     // Set up 2-second interval
-    const interval = setInterval(fetchAllMarkets, 1000000);
+    const interval = setInterval(fetchAllMarkets, 1000);
 
     // Clean up interval on unmount
     return () => clearInterval(interval);
