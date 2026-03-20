@@ -1,5 +1,3 @@
-import YahooFinance from 'yahoo-finance2';
-
 interface StockBasicInfo {
   symbol: string;
   price: number;
@@ -8,9 +6,9 @@ interface StockBasicInfo {
   change: number;
 }
 
-export const fetchStockData = async (symbol: string): Promise<StockBasicInfo> => {
+export const fetchStockData = async (symbol: string, yahooFinance: any): Promise<StockBasicInfo> => {
   try {
-    const yahooFinance = new YahooFinance();
+    // const yahooFinance = new YahooFinance();
     const quote = await yahooFinance.quote(symbol);
     const { regularMarketPrice: price, currency, regularMarketChangePercent } = quote;
     return { symbol, price, currency, change: parseFloat(regularMarketChangePercent.toFixed(2)) };
