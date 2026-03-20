@@ -1,30 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-// Data contained within the component
-const bullData = [
-  { symbol: "NVDA", change: 100 },
-  { symbol: "GOOG", change: 80 },
-  { symbol: "AAPL", change: 65 },
-  { symbol: "MSFT", change: 50 },
-  { symbol: "TSLA", change: 35 },
-];
+interface Mover {
+  symbol: string;
+  changePercent: number;
+}
 
-const bearData = [
-  { symbol: "META", change: 90 },
-  { symbol: "AMZN", change: 70 },
-  { symbol: "NFLX", change: 55 },
-  { symbol: "UBER", change: 40 },
-  { symbol: "SNAP", change: 25 },
-];
+interface TopMoversData {
+  gainers: Mover[];
+  losers: Mover[];
+}
 
-const filters = ["Portfolio", "Stock", "Crypto", "ETF"];
+const filters = ["World", "Portfolio 1", "Portfolio 2", "Portfolio 3"];
 
 export default function TopMovers() {
   const [isBull, setIsBull] = useState(true);
   const [activeFilter, setActiveFilter] = useState(0);
+  const [data, setData] = useState<TopMoversData | null>(null);
+  const currentData = isBull ? data?.gainers : data?.losers;
+  const maxChange = currentData?.length 
+    ? Math.max(...currentData.map(s => Math.abs(s.changePercent))) 
+    : 100;
 
-  const currentData = isBull ? bullData : bearData;
-  const maxChange = Math.max(...currentData.map(s => s.change));
+  const getMovers = async () => {
+    try {
+      // Keep loading true only on first fetch to prevent flickering on intervals
+      const response = await fetch('http://localhost:5001/api/top-movers');
+      if (!response.ok) throw new Error('Network response was not ok');
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching movers:", error);
+    } 
+  };
+
+  useEffect(() => {
+    getMovers();
+  }, []);
 
   return (
     <div className="p-3 w-full max-w-lg">
@@ -32,8 +43,8 @@ export default function TopMovers() {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-white text-3xl font-bold">{isBull ? "Top Bulls" : "Top Bears"}</h2>
         <div className="flex gap-2 text-xl">
-          <button onClick={() => setIsBull(false)} className={!isBull ? "text-red-500" : "opacity-30"}>↓</button>
-          <button onClick={() => setIsBull(true)} className={isBull ? "text-green-500" : "opacity-30"}>↑</button>
+          <button onClick={() => setIsBull(false)} className={!isBull ? "text-red-500" : "opacity-30 hover:opacity-50 hover:text-red-500"}>↓</button>
+          <button onClick={() => setIsBull(true)} className={isBull ? "text-green-500" : "opacity-30 hover:opacity-50 hover:text-green-500"}>↑</button>
         </div>
       </div>
 
@@ -51,8 +62,8 @@ export default function TopMovers() {
       </div>
 
       {/* List of Stocks */}
-      <div className="flex flex-col gap-1">
-        {currentData.map((stock, i) => (
+      <div className="flex flex-col gap-1 overflow-hidden max-h-[280px] overflow-y-auto scrollbar-dark">
+        {currentData?.map((stock, i) => (
           <div key={i} className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-neutral-900 transition">
             <img src="/Logo.png" alt="" className="w-6 h-6 rounded opacity-70" />
             <span className="text-white font-bold text-sm w-14">{stock.symbol}</span>
@@ -61,12 +72,12 @@ export default function TopMovers() {
             <div className="flex-1 h-2 bg-neutral-900 rounded-full overflow-hidden">
               <div 
                 className={`h-full transition-all duration-700 ${isBull ? "bg-green-500" : "bg-red-500"}`} 
-                style={{ width: `${(stock.change / maxChange) * 100}%` }} 
+                style={{ width: `${(stock.changePercent / maxChange) * 100}%` }} 
               />
             </div>
 
             <span className={`text-sm font-semibold w-14 text-right ${isBull ? "text-green-400" : "text-red-400"}`}>
-              {isBull ? "+" : "-"}{stock.change}%
+              {isBull ? "+" : ""}{stock.changePercent}%
             </span>
           </div>
         ))}

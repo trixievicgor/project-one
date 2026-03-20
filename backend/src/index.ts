@@ -1,10 +1,31 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import YahooFinance from 'yahoo-finance2';
 import { fetchStockData } from './services/stockService.js';
+import { fetchFullStockData } from './services/fullStockData.js';
+import { fetchTopMovers } from './services/topMoversService.js';
 
 const app = express();
-app.use(cors());
+app.use(cors());  
 app.use(express.json());
+const yahooFinance = new YahooFinance();
+
+app.get('/api/fullstockdata/:code', async (req: Request, res: Response) => {
+  const { code } = req.params;
+
+  // Check if code exists and is a single string
+  if (typeof code !== 'string') {
+    res.status(400).json({ error: "Invalid ticker symbol format" });
+    return; 
+  }
+
+  try {
+    const data = await fetchFullStockData(code, yahooFinance);
+    res.json(data);
+  } catch (error: any) {
+    res.status(404).json({ error: error.message });
+  }
+});
 
 app.get('/api/stock/:code', async (req: Request, res: Response) => {
   const { code } = req.params;
@@ -16,10 +37,19 @@ app.get('/api/stock/:code', async (req: Request, res: Response) => {
   }
 
   try {
-    const data = await fetchStockData(code);
+    const data = await fetchStockData(code, yahooFinance);
     res.json(data);
   } catch (error: any) {
     res.status(404).json({ error: error.message });
+  }
+});
+
+app.get('/api/top-movers', async (req: Request, res: Response) => {
+  try {
+    const data = await fetchTopMovers(yahooFinance);
+    res.json(data);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 });
 
