@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -7,8 +8,11 @@ interface LayoutProps {
 
 const Layout = ({ children, headerRight }: LayoutProps) => {
   const password = 'trixie';
+  const navigate = useNavigate();
   const [maintenence, setMaintenence] = useState(true);
   const [input, setInput] = useState('');
+  const [search, setSearch] = useState('');
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -16,6 +20,17 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
       setMaintenence(false);
     }
   };
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const symbol = search.trim().toUpperCase();
+      if (symbol) {
+        navigate(`/${symbol}`);
+        setSearch('');
+      }
+    }
+  };
+
   return (
     <div className='relative min-h-screen overflow-hidden bg-black'>
       {/* Maintenence Notice */}
@@ -50,11 +65,21 @@ const Layout = ({ children, headerRight }: LayoutProps) => {
         {/* Shared Header */}
         <nav className='w-full p-1 flex justify-between items-center'>
           <button
-            // onClick={() => navigate('/')}
+            onClick={() => navigate('/')}
             className='flex items-center justify-center overflow-hidden cursor-pointer'
           >
             <img src={'/BlackVaultzLogo.png'} alt='Logo' className='h-15' />
           </button>
+          <div className="flex w-1/2 items-center gap-2 bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2">
+            <span className="text-neutral-500 text-normal">🔍</span>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+              placeholder="Search Stock, ETF, Crypto, etc by Symbol (e.g., NVDA, AAPL, BTC, VOOG)"
+              className="bg-transparent text-normal text-white placeholder-neutral-600 outline-none flex-1"
+            />
+          </div>
           {headerRight}
         </nav>
 
