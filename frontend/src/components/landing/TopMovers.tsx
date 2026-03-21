@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Mover {
   symbol: string;
@@ -13,6 +14,7 @@ interface TopMoversData {
 const filters = ["World", "Portfolio 1", "Portfolio 2", "Portfolio 3"];
 
 export default function TopMovers() {
+  const navigate = useNavigate();
   const [isBull, setIsBull] = useState(true);
   const [activeFilter, setActiveFilter] = useState(0);
   const [data, setData] = useState<TopMoversData | null>(null);
@@ -64,12 +66,16 @@ export default function TopMovers() {
       {/* List of Stocks */}
       <div className="flex flex-col gap-1 overflow-hidden max-h-[280px] overflow-y-auto scrollbar-dark">
         {currentData?.map((stock, i) => (
-          <div key={i} className="flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-neutral-900 transition">
+          <button 
+            key={i} 
+            onClick={() => navigate(`/${stock.symbol}`)}
+            className="w-full flex items-center gap-3 py-2 px-2 rounded-xl hover:bg-neutral-900 transition text-left appearance-none focus:outline-none"
+          >
             <img src="/Logo.png" alt="" className="w-6 h-6 rounded opacity-70" />
             <span className="text-white font-bold text-sm w-14">{stock.symbol}</span>
             
             {/* Relative Strength Bar */}
-            <div className="flex-1 h-2 bg-neutral-900 rounded-full overflow-hidden">
+            <div className="flex-1 h-2 bg-neutral-800 rounded-full overflow-hidden">
               <div 
                 className={`h-full transition-all duration-700 ${isBull ? "bg-green-500" : "bg-red-500"}`} 
                 style={{ width: `${(stock.changePercent / maxChange) * 100}%` }} 
@@ -79,7 +85,7 @@ export default function TopMovers() {
             <span className={`text-sm font-semibold w-14 text-right ${isBull ? "text-green-400" : "text-red-400"}`}>
               {isBull ? "+" : ""}{stock.changePercent}%
             </span>
-          </div>
+          </button>
         ))}
       </div>
     </div>
